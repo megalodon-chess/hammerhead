@@ -29,11 +29,17 @@ class Board:
 
         self.move_num = 0            # Current position is startpos with this many moves
         self.flipped = False
+        self.board.push_uci("e2e4")
+        self.board.push_uci("e7e5")
+        self.board.push_uci("g1f3")
+        self.board.push_uci("b8c6")
 
     def set_view(self):
         self.view_board = chess.Board()
-        for move in self.board.move_stack[:self.move_num+1]:
-            self.view_board.push(move)
+        movect = 0
+        while movect < self.move_num:
+            self.view_board.push(self.board.move_stack[movect])
+            movect += 1
 
     def push(self, move):
         if self.move_num == len(self.board.move_stack):
@@ -44,17 +50,9 @@ class Board:
     def draw(self, events, size):
         sq_size = int(size / 8)
         surf = pygame.Surface((sq_size*8, sq_size*8), pygame.SRCALPHA)
+        self.update(events)
         if self.view_board is None:
             self.set_view()
-
-        for event in events:
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_x:
-                    self.flipped = not self.flipped
-                elif event.key == pygame.K_LEFT:
-                    self.move_num = max(self.move_num-1, 0)
-                elif event.key == pygame.K_RIGHT:
-                    self.move_num = min(self.move_num+1, len(self.board.move_stack))
 
         for x in range(8):
             for y in range(8):
@@ -76,3 +74,15 @@ class Board:
         if self.flipped:
             surf = pygame.transform.rotate(surf, 180)
         return surf
+
+    def update(self, events):
+        for event in events:
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_x:
+                    self.flipped = not self.flipped
+                elif event.key == pygame.K_LEFT:
+                    self.move_num = max(self.move_num-1, 0)
+                    self.set_view()
+                elif event.key == pygame.K_RIGHT:
+                    self.move_num = min(self.move_num+1, len(self.board.move_stack))
+                    self.set_view()
