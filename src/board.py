@@ -40,3 +40,15 @@ class Board:
             self.move_num += 1
         self.board.push(move)
         self.set_view()
+
+    def draw(self, events, size):
+        surf = pygame.Surface(size, pygame.SRCALPHA)
+        sq_size = size / 8
+
+        for x in range(8):
+            for y in range(8):
+                loc = (x*sq_size, y*sq_size)
+                col = BOARD_WHITE if (x+y) % 2 == 0 else BOARD_BLACK
+                pygame.draw.rect(surf, col, (*loc, sq_size+1, sq_size+1))
+
+        return surf
