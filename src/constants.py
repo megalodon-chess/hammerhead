@@ -22,7 +22,19 @@ import pygame
 pygame.init()
 
 PARENT = os.path.dirname(os.path.realpath(__file__))
+IMG_DIR = os.path.join(PARENT, "images")
 
 FPS = 60
+IMAGES = {}
+
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
+
+for f in os.listdir(IMG_DIR):
+    path = os.path.join(IMG_DIR, f)
+    img = pygame.image.load(path)
+    if f[0] in ("b", "w") and len(f.split(".")[0]) == 2:
+        key = f[1].upper() if f[0] == "w" else f[1].lower()
+    else:
+        key = f.split(".")[0]
+    IMAGES[key] = img
