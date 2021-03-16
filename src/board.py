@@ -42,7 +42,7 @@ class Board:
         self.set_view()
 
     def draw(self, events, size):
-        surf = pygame.Surface(size, pygame.SRCALPHA)
+        surf = pygame.Surface((size, size), pygame.SRCALPHA)
         sq_size = size / 8
 
         for x in range(8):
