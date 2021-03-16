@@ -42,10 +42,19 @@ class Board:
         self.set_view()
 
     def draw(self, events, size):
-        surf = pygame.Surface((size, size), pygame.SRCALPHA)
         sq_size = int(size / 8)
+        surf = pygame.Surface((sq_size*8, sq_size*8), pygame.SRCALPHA)
         if self.view_board is None:
             self.set_view()
+
+        for event in events:
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_x:
+                    self.flipped = not self.flipped
+                elif event.key == pygame.K_LEFT:
+                    self.move_num = max(self.move_num-1, 0)
+                elif event.key == pygame.K_RIGHT:
+                    self.move_num = min(self.move_num+1, len(self.board.move_stack))
 
         for x in range(8):
             for y in range(8):
@@ -60,15 +69,10 @@ class Board:
                 if piece is not None:
                     img = IMAGES[piece.symbol()]
                     img = pygame.transform.scale(img, (sq_size, sq_size))
+                    if self.flipped:
+                        img = pygame.transform.rotate(img, 180)
                     surf.blit(img, loc)
 
-        for event in events:
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_x:
-                    self.flipped = not self.flipped
-                elif event.key == pygame.K_LEFT:
-                    self.move_num = max(self.move_num-1, 0)
-                elif event.key == pygame.K_RIGHT:
-                    self.move_num = min(self.move_num+1, len(self.board.move_stack))
-
+        if self.flipped:
+            surf = pygame.transform.rotate(surf, 180)
         return surf
