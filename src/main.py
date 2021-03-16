@@ -19,6 +19,7 @@
 
 import pygame
 from constants import *
+from board import Board
 pygame.init()
 
 
@@ -29,6 +30,8 @@ def main():
     pygame.display.set_caption("Hammerhead Chess GUI")
     surface = pygame.display.set_mode((width, height), pygame.RESIZABLE)
     clock = pygame.time.Clock()
+
+    board = Board()
 
     while True:
         clock.tick(FPS)
