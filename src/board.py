@@ -29,3 +29,14 @@ class Board:
 
         self.move_num = 0            # Current position is startpos with this many moves
         self.flipped = False
+
+    def set_view(self):
+        self.view_board = chess.Board()
+        for move in self.board.move_stack[:self.move_num+1]:
+            self.view_board.push(move)
+
+    def push(self, move):
+        if self.move_num == len(self.board.move_stack):
+            self.move_num += 1
+        self.board.push(move)
+        self.set_view()
