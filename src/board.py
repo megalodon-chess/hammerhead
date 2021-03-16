@@ -62,4 +62,13 @@ class Board:
                     img = pygame.transform.scale(img, (sq_size, sq_size))
                     surf.blit(img, loc)
 
+        for event in events:
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_x:
+                    self.flipped = not self.flipped
+                elif event.key == pygame.K_LEFT:
+                    self.move_num = max(self.move_num-1, 0)
+                elif event.key == pygame.K_RIGHT:
+                    self.move_num = min(self.move_num+1, len(self.board.move_stack))
+
         return surf
