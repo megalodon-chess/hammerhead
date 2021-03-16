@@ -54,12 +54,24 @@ class Board:
         if self.view_board is None:
             self.set_view()
 
+        # Squares
         for x in range(8):
             for y in range(8):
                 loc = (x*sq_size, y*sq_size)
                 col = BOARD_WHITE if (x+y) % 2 == 0 else BOARD_BLACK
                 pygame.draw.rect(surf, col, (*loc, sq_size+1, sq_size+1))
 
+        if len(self.view_board.move_stack) > 0:
+            prev_move = self.view_board.move_stack[-1]
+            squares = (prev_move.from_square, prev_move.to_square)
+            for sq in squares:
+                x = sq % 8
+                y = 7 - (sq // 8)
+                loc = (x*sq_size, y*sq_size)
+                col = BOARD_WHITE_SELECT if (x+y) % 2 == 0 else BOARD_BLACK_SELECT
+                pygame.draw.rect(surf, col, (*loc, sq_size+1, sq_size+1))
+
+        # Pieces
         for x in range(8):
             for y in range(8):
                 loc = (x*sq_size, y*sq_size)
