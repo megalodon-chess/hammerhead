@@ -43,12 +43,23 @@ class Board:
 
     def draw(self, events, size):
         surf = pygame.Surface((size, size), pygame.SRCALPHA)
-        sq_size = size / 8
+        sq_size = int(size / 8)
+        if self.view_board is None:
+            self.set_view()
 
         for x in range(8):
             for y in range(8):
                 loc = (x*sq_size, y*sq_size)
                 col = BOARD_WHITE if (x+y) % 2 == 0 else BOARD_BLACK
                 pygame.draw.rect(surf, col, (*loc, sq_size+1, sq_size+1))
+
+        for x in range(8):
+            for y in range(8):
+                loc = (x*sq_size, y*sq_size)
+                piece = self.view_board.piece_at(x + 8*(7-y))
+                if piece is not None:
+                    img = IMAGES[piece.symbol()]
+                    img = pygame.transform.scale(img, (sq_size, sq_size))
+                    surf.blit(img, loc)
 
         return surf
