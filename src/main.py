@@ -23,6 +23,19 @@ from board import Board
 pygame.init()
 
 
+class WindowManager:
+    def __init__(self):
+        self.board = Board()
+
+    def draw(self, surface, events):
+        width, height = surface.get_size()
+
+        board_size = min(width, height) - 100
+        board_loc = (50, 50)
+
+        surface.blit(self.board.draw(events, board_size), board_loc)
+
+
 def main():
     width, height = 1280, 720
     prev_width, prev_height = 1280, 720
@@ -31,7 +44,7 @@ def main():
     surface = pygame.display.set_mode((width, height), pygame.RESIZABLE)
     clock = pygame.time.Clock()
 
-    board = Board()
+    winman = WindowManager()
 
     while True:
         clock.tick(FPS)
@@ -49,6 +62,7 @@ def main():
                 prev_height = height
 
         surface.fill(BLACK)
+        winman.draw(surface, events)
 
 
 main()
