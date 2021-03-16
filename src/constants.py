@@ -27,6 +27,10 @@ IMG_DIR = os.path.join(PARENT, "images")
 FPS = 60
 IMAGES = {}
 
+FONT_SMALL = pygame.font.SysFont("arial", 12)
+FONT_MED = pygame.font.SysFont("arial", 20)
+FONT_LARGE = pygame.font.SysFont("arial", 32)
+
 BLACK = (0, 0, 0)
 GRAY_DARK = (64, 64, 64)
 GRAY = (128, 128, 128)
