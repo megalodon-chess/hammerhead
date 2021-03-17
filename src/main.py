@@ -123,7 +123,18 @@ class WindowManager:
                 self.analysis_session += 1
 
             text = "Analysis in progress" if self.analysis_in_progress else "Analysis not in progress"
-            centered_text(surface, (menu_loc[0]+25, menu_loc[1]+225), BLACK, FONT_MED, text, cx=False, cy=False)
+            centered_text(surface, (menu_loc[0]+25, menu_loc[1]+225), BLACK, FONT_MED, text, cx=False)
+            if self.analysis_in_progress:
+                info = (
+                    ("Depth", "depth"),
+                    ("Nodes", "nodes"),
+                    ("Nodes per second", "nps"),
+                    ("Time", "time")
+                )
+                for i, (text, key) in enumerate(info):
+                    text = text + ": " + str(self.analysis_info[key])
+                    y = menu_loc[1] + 275 + 25*i
+                    centered_text(surface, (menu_loc[0]+25, y), BLACK, FONT_SMALL, text, cx=False)
 
 
 def main():
