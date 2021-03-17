@@ -43,7 +43,7 @@ BOARD_WHITE_MARK = (190, 190, 180)
 BOARD_BLACK = (100, 140, 80)
 BOARD_BLACK_SELECT = (140, 180, 80)
 BOARD_BLACK_MARK = (70, 120, 50)
-BOARD_HIGHLIGHT = (0, 0, 0, 200)
+BOARD_HIGHLIGHT = (0, 0, 0, 100)
 
 for f in os.listdir(IMG_DIR):
     path = os.path.join(IMG_DIR, f)
