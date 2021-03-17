@@ -33,12 +33,21 @@ class Board:
         self.flipped = False
 
         self.thread_id = 0           # Analysis thread ends when this value changes
-        self.curr_eval = 0
+        self.analysis_info = None
 
         self.push(chess.Move.from_uci("e2e4"))
         self.push(chess.Move.from_uci("e7e5"))
         self.push(chess.Move.from_uci("g1f3"))
         self.push(chess.Move.from_uci("b8c6"))
+
+    def analyze(self, eng_path):
+        thread_id = self.thread_id
+        engine = chess.engine.SimpleEngine.popen_uci(eng_path)
+        with engine.analysis(self.view_board) as analysis:
+            for info in analysis:
+                print(info)
+                if self.thread_id != thread_id:
+                    break
 
     def set_view(self):
         self.view_board = chess.Board()
