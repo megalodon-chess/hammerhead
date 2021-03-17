@@ -30,7 +30,7 @@ pygame.init()
 class WindowManager:
     def __init__(self):
         self.active = True
-        self.menus = ("Game", "Analysis")
+        self.menus = ("Game", "Analysis", "Engines")
         self.tab = 0
 
         self.board = Board()
@@ -64,7 +64,7 @@ class WindowManager:
 
         board_size = min(width, height) - 100
         board_loc = (50, 50)
-        menu_size = (width-board_size-150, height)
+        menu_size = (width-board_size-150, height-100)
         menu_loc = (board_size+100, 50)
 
         # Board
@@ -84,8 +84,9 @@ class WindowManager:
                 if clicked:
                     self.tab = i
 
-            pygame.draw.rect(surface, col, (*loc, *size))
+            pygame.draw.rect(surface, col, (*loc, *size), border_top_left_radius=5, border_top_right_radius=5)
             centered_text(surface, (loc[0]+size[0]//2, loc[1]+size[1]//2), BLACK, FONT_SMALL, tab)
+        pygame.draw.rect(surface, TAB_SEL, (menu_loc[0], menu_loc[1]+tab_height, menu_size[0], menu_size[1]-tab_height))
 
 
 def main():
