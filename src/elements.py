@@ -22,6 +22,12 @@ from constants import *
 pygame.init()
 
 
+def centered_text(surf, loc, col, font, text):
+    text_surf = font.render(text, 1, col)
+    text_loc = (loc[0]-text.get_width()//2, loc[1]-text.get_width()//2)
+    surf.blit(text_surf, text_loc)
+
+
 class Button:
     def __init__(self):
         self.prev_loc = (0, 0)
@@ -46,8 +52,6 @@ class Button:
         self.prev_size = size
 
         color = (GRAY_DARK if self.clicked(events) else WHITE) if self.hovered() else GRAY_LIGHT
-        text_surf = FONT_MED.render(text, 1, BLACK)
-        text_loc = (loc[0] + (size[0]-text_surf.get_width())//2, loc[1] + (size[1]-text_surf.get_height())//2)
         pygame.draw.rect(surface, color, (*loc, *size))
         pygame.draw.rect(surface, WHITE, (*loc, *size), 2)
-        surface.blit(text_surf, text_loc)
+        centered_text(surface, (loc[0]+size[0]//2, loc[1]+size[1]//2), BLACK, FONT_MED, text)
