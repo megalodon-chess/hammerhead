@@ -89,8 +89,10 @@ class Board:
                 pygame.draw.rect(surf, col, (*loc, sq_size+1, sq_size+1))
 
         for x, y in self.selected:
-            col = BOARD_WHITE_HIGHLIGHT if (x+y) % 2 == 0 else BOARD_BLACK_HIGHLIGHT
-            pygame.draw.rect(surf, col, (x*sq_size, y*sq_size, sq_size+1, sq_size+1))
+            cell_surf = pygame.Surface((sq_size, sq_size))
+            cell_surf.set_alpha(BOARD_HIGHLIGHT[-1])
+            cell_surf.fill(BOARD_HIGHLIGHT)
+            surf.blit(cell_surf, (x*sq_size, y*sq_size))
 
         # Pieces
         for x in range(8):
