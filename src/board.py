@@ -17,8 +17,10 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 
+import threading
 import pygame
 import chess
+import chess.engine
 from constants import *
 
 
@@ -29,10 +31,14 @@ class Board:
 
         self.move_num = 0            # Current position is startpos with this many moves
         self.flipped = False
-        self.board.push_uci("e2e4")
-        self.board.push_uci("e7e5")
-        self.board.push_uci("g1f3")
-        self.board.push_uci("b8c6")
+
+        self.thread_id = 0           # Analysis thread ends when this value changes
+        self.curr_eval = 0
+
+        self.push(chess.Move.from_uci("e2e4"))
+        self.push(chess.Move.from_uci("e7e5"))
+        self.push(chess.Move.from_uci("g1f3"))
+        self.push(chess.Move.from_uci("b8c6"))
 
     def set_view(self):
         self.view_board = chess.Board()
@@ -42,6 +48,7 @@ class Board:
             movect += 1
 
     def push(self, move):
+        self.thread_id += 1
         if self.move_num == len(self.board.move_stack):
             self.move_num += 1
         self.board.push(move)
