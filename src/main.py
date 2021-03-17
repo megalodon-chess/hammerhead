@@ -46,6 +46,26 @@ class WindowManager:
 
         self.board = Board()
 
+    def nodes_text(self, num):
+        if num < 10**5:
+            suffix = ""
+        elif 10**5 <= num < 10**8:
+            suffix = "k"
+            num = int(num/10**3)
+        elif 10**8 <= num:
+            suffix = "m"
+            num = int(num/10**6)
+        string = suffix
+        count = 0
+        for digit in reversed(str(num)):
+            string = digit + string
+            if count % 3 == 2:
+                string = "," + string
+            count += 1
+        if string.startswith(","):
+            string = string[1:]
+        return string
+
     def analyze(self, eng_path):
         self.analysis_info = {"depth": 0, "nodes": 0, "nps": 0, "score": None, "time": 0}
         self.analysis_in_progress = True
@@ -132,7 +152,9 @@ class WindowManager:
                     ("Time", "time")
                 )
                 for i, (text, key) in enumerate(info):
-                    text = text + ": " + str(self.analysis_info[key])
+                    key_info = self.analysis_info[key]
+                    text = text + ": "
+                    text += self.nodes_text(key_info) if "Nodes" in text else str(key_info)
                     y = menu_loc[1] + 275 + 25*i
                     centered_text(surface, (menu_loc[0]+25, y), BLACK, FONT_SMALL, text, cx=False)
 
