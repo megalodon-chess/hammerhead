@@ -24,7 +24,7 @@ pygame.init()
 
 def centered_text(surf, loc, col, font, text):
     text_surf = font.render(text, 1, col)
-    text_loc = (loc[0]-text.get_width()//2, loc[1]-text.get_width()//2)
+    text_loc = (loc[0]-text_surf.get_width()//2, loc[1]-text_surf.get_height()//2)
     surf.blit(text_surf, text_loc)
 
 
