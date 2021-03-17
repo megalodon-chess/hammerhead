@@ -75,6 +75,7 @@ class WindowManager:
         engine = chess.engine.SimpleEngine.popen_uci(eng_path)
         if "Threads" in engine.options:
             engine.configure({"Threads": CORES})
+        restart = False
         with engine.analysis(self.board.view_board) as analysis:
             keys = ("depth", "nodes", "nps", "time")
             for info in analysis:
