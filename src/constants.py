@@ -18,11 +18,23 @@
 #
 
 import os
+import json
 import pygame
 pygame.init()
 
+
+def load_settings():
+    with open(SETTINGS_PATH, "r") as file:
+        return json.load(file)
+
+def save_settings(settings):
+    with open(SETTINGS_PATH, "w") as file:
+        json.dump(settings, file)
+
+
 PARENT = os.path.dirname(os.path.realpath(__file__))
 IMG_DIR = os.path.join(PARENT, "images")
+SETTINGS_PATH = os.path.join(PARENT, "settings.json")
 
 FPS = 60
 IMAGES = {}
@@ -56,3 +68,6 @@ for f in os.listdir(IMG_DIR):
     else:
         key = f.split(".")[0]
     IMAGES[key] = img
+
+if not os.path.isfile(SETTINGS_PATH):
+    save_settings({})
