@@ -55,6 +55,13 @@ class WindowManager:
     def draw(self, surface, events):
         # Split surface into sections
         width, height = surface.get_size()
+        mx, my = pygame.mouse.get_pos()
+        clicked = False
+        for event in events:
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                clicked = True
+                break
+
         board_size = min(width, height) - 100
         board_loc = (50, 50)
         menu_size = (width-board_size-150, height)
@@ -72,6 +79,11 @@ class WindowManager:
             col = TAB_SEL if i == self.tab else TAB_DESEL
             loc = (menu_loc[0] + tab_size*i + tab_margin, menu_loc[1])
             size = (tab_size - 2*tab_margin, tab_height)
+            if loc[0] <= mx <= loc[0]+size[0] and loc[1] <= my <= loc[1]+size[1]:
+                col = TAB_SEL
+                if clicked:
+                    self.tab = i
+
             pygame.draw.rect(surface, col, (*loc, *size))
             centered_text(surface, (loc[0]+size[0]//2, loc[1]+size[1]//2), BLACK, FONT_SMALL, tab)
 
