@@ -82,11 +82,17 @@ class WindowManager:
                     if key in info:
                         self.analysis_info[key] = info[key]
 
-                if self.board.move_num != start_move_num or not self.active or self.analysis_session != session:
+                if not self.active or self.analysis_session != session:
+                    restart = False
+                    break
+                if self.board.move_num != start_move_num:
+                    restart = True
                     break
 
         engine.quit()
         self.analysis_in_progress = False
+        if restart:
+            threading.Thread(target=self.analyze, args=(eng_path,)).start()
 
     def draw(self, surface, events):
         # Split surface into sections
