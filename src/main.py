@@ -22,7 +22,7 @@ import pygame
 import chess
 import chess.engine
 from constants import *
-from elements import Button
+from elements import Button, centered_text
 from board import Board
 pygame.init()
 
@@ -30,7 +30,7 @@ pygame.init()
 class WindowManager:
     def __init__(self):
         self.active = True
-        self.menus = ("Analysis",)
+        self.menus = ("Game", "Analysis")
         self.tab = 0
 
         self.board = Board()
@@ -66,13 +66,14 @@ class WindowManager:
         # Tabs
         tab_size = menu_size[0] / len(self.menus)
         tab_margin = 2
-        tab_height = 15
+        tab_height = 20
 
         for i, tab in enumerate(self.menus):
             col = TAB_SEL if i == self.tab else TAB_DESEL
             loc = (menu_loc[0] + tab_size*i + tab_margin, menu_loc[1])
             size = (tab_size - 2*tab_margin, tab_height)
             pygame.draw.rect(surface, col, (*loc, *size))
+            centered_text(surface, (loc[0]+size[0]//2, loc[1]+size[1]//2), BLACK, FONT_SMALL, tab)
 
 
 def main():
