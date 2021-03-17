@@ -39,6 +39,7 @@ class WindowManager:
 
         self.analysis_session = 0
         self.analysis_eng = ""
+        self.analysis_info = {}
         self.analysis_in_progress = False
         self.analysis_load_eng = Button()
         self.analysis_start = Button()
@@ -155,15 +156,15 @@ class WindowManager:
 
             text = "Analysis in progress" if self.analysis_in_progress else "Analysis not in progress"
             centered_text(surface, (menu_loc[0]+25, menu_loc[1]+225), BLACK, FONT_MED, text, cx=False)
-            if self.analysis_in_progress:
-                info = (
-                    ("Depth", "depth"),
-                    ("Nodes", "nodes"),
-                    ("Nodes per second", "nps"),
-                    ("Time", "time"),
-                    ("Score", "score"),
-                )
-                for i, (text, key) in enumerate(info):
+            info = (
+                ("Depth", "depth"),
+                ("Nodes", "nodes"),
+                ("Nodes per second", "nps"),
+                ("Time", "time"),
+                ("Score", "score"),
+            )
+            for i, (text, key) in enumerate(info):
+                if key in self.analysis_info:
                     key_info = self.analysis_info[key]
                     text = text + ": "
                     text += self.nodes_text(key_info) if "Nodes" in text else str(key_info)
