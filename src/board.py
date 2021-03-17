@@ -31,6 +31,7 @@ class Board:
 
         self.move_num = 0            # Current position is startpos with this many moves
         self.flipped = False
+        self.selected = set()        # Selected cells, set((x1, y1), (x2, y2), ...)
 
         self.push(chess.Move.from_uci("e2e4"))
         self.push(chess.Move.from_uci("e7e5"))
@@ -53,7 +54,7 @@ class Board:
     def draw(self, events, size):
         sq_size = int(size / 8)
         surf = pygame.Surface((sq_size*8, sq_size*8), pygame.SRCALPHA)
-        self.update(events)
+        self.update(events, sq_size)
         if self.view_board is None:
             self.set_view()
 
@@ -74,6 +75,12 @@ class Board:
                 col = BOARD_WHITE_SELECT if (x+y) % 2 == 0 else BOARD_BLACK_SELECT
                 pygame.draw.rect(surf, col, (*loc, sq_size+1, sq_size+1))
 
+        for x, y in self.selected:
+            cell_surf = pygame.Surface((sq_size, sq_size))
+            cell_surf.set_alpha(BOARD_HIGHLIGHT[-1])
+            cell_surf.fill(BOARD_HIGHLIGHT)
+            surf.blit(cell_surf, (x*sq_size, y*sq_size))
+
         # Pieces
         for x in range(8):
             for y in range(8):
@@ -90,7 +97,7 @@ class Board:
             surf = pygame.transform.rotate(surf, 180)
         return surf
 
-    def update(self, events):
+    def update(self, events, sq_size):
         for event in events:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_x:
@@ -101,3 +108,10 @@ class Board:
                 elif event.key == pygame.K_RIGHT:
                     self.move_num = min(self.move_num+1, len(self.board.move_stack))
                     self.set_view()
+
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 3:
+                    if (pos := tuple(map(lambda x: (x - 50) // sq_size, pygame.mouse.get_pos()))) in self.selected:
+                        self.selected.remove(pos)
+                    else:
+                        self.selected.add(pos)
