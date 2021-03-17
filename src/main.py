@@ -76,11 +76,13 @@ class WindowManager:
         if "Threads" in engine.options:
             engine.configure({"Threads": CORES})
         with engine.analysis(self.board.view_board) as analysis:
-            keys = ("depth", "nodes", "nps", "score", "time")
+            keys = ("depth", "nodes", "nps", "time")
             for info in analysis:
                 for key in keys:
                     if key in info:
                         self.analysis_info[key] = info[key]
+                if "score" in info:
+                    self.analysis_info["score"] = int(str(info["score"].pov(chess.WHITE))) / 100
 
                 if not self.active or self.analysis_session != session:
                     restart = False
@@ -157,7 +159,8 @@ class WindowManager:
                     ("Depth", "depth"),
                     ("Nodes", "nodes"),
                     ("Nodes per second", "nps"),
-                    ("Time", "time")
+                    ("Time", "time"),
+                    ("Score", "score"),
                 )
                 for i, (text, key) in enumerate(info):
                     key_info = self.analysis_info[key]
