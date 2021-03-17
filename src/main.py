@@ -22,14 +22,18 @@ import pygame
 import chess
 import chess.engine
 from constants import *
+from elements import Button
 from board import Board
 pygame.init()
 
 
 class WindowManager:
     def __init__(self):
-        self.board = Board()
         self.active = True
+        self.menus = ("Analysis",)
+        self.tab = 0
+
+        self.board = Board()
 
     def analyze(self, eng_path):
         start_move_num = self.board.move_num
@@ -49,12 +53,26 @@ class WindowManager:
         engine.quit()
 
     def draw(self, surface, events):
+        # Split surface into sections
         width, height = surface.get_size()
-
         board_size = min(width, height) - 100
         board_loc = (50, 50)
+        menu_size = (width-board_size-150, height)
+        menu_loc = (board_size+100, 50)
 
+        # Board
         surface.blit(self.board.draw(events, board_size), board_loc)
+
+        # Tabs
+        tab_size = menu_size[0] / len(self.menus)
+        tab_margin = 2
+        tab_height = 15
+
+        for i, tab in enumerate(self.menus):
+            col = TAB_SEL if i == self.tab else TAB_DESEL
+            loc = (menu_loc[0] + tab_size*i + tab_margin, menu_loc[1])
+            size = (tab_size - 2*tab_margin, tab_height)
+            pygame.draw.rect(surface, col, (*loc, *size))
 
 
 def main():
