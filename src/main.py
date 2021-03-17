@@ -17,6 +17,7 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 
+import threading
 import pygame
 import chess
 import chess.engine
@@ -28,15 +29,24 @@ pygame.init()
 class WindowManager:
     def __init__(self):
         self.board = Board()
+        self.active = True
 
     def analyze(self, eng_path):
-        start_movenum = self.board.move_num
+        start_move_num = self.board.move_num
         engine = chess.engine.SimpleEngine.popen_uci(eng_path)
+        self.analysis_info = {"depth": 0, "nodes": 0, "nps": 0, "score": None, "time": 0}
+
         with engine.analysis(self.board.view_board) as analysis:
+            keys = ("depth", "nodes", "nps", "score", "time")
             for info in analysis:
-                print(info)
-                if self.board.move_num != start_movenum:
+                for key in keys:
+                    if key in info:
+                        self.analysis_info[key] = info[key]
+
+                if self.board.move_num != start_move_num or not self.active:
                     break
+
+        engine.quit()
 
     def draw(self, surface, events):
         width, height = surface.get_size()
@@ -63,6 +73,7 @@ def main():
         events = pygame.event.get()
         for event in events:
             if event.type == pygame.QUIT:
+                winman.active = False
                 pygame.quit()
                 return
             elif event.type == pygame.VIDEORESIZE:
