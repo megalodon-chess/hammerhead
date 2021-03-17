@@ -18,6 +18,7 @@
 #
 
 import os
+import multiprocessing
 import json
 import pygame
 pygame.init()
@@ -37,6 +38,7 @@ IMG_DIR = os.path.join(PARENT, "images")
 SETTINGS_PATH = os.path.join(PARENT, "settings.json")
 
 FPS = 60
+CORES = multiprocessing.cpu_count()
 IMAGES = {}
 
 FONT_SMALL = pygame.font.SysFont("arial", 16)

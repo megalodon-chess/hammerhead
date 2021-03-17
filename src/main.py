@@ -73,6 +73,8 @@ class WindowManager:
         start_move_num = self.board.move_num
         session = self.analysis_session
         engine = chess.engine.SimpleEngine.popen_uci(eng_path)
+        if "Threads" in engine.options:
+            engine.configure({"Threads": CORES})
         with engine.analysis(self.board.view_board) as analysis:
             keys = ("depth", "nodes", "nps", "score", "time")
             for info in analysis:
