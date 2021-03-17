@@ -18,6 +18,8 @@
 #
 
 import pygame
+import chess
+import chess.engine
 from constants import *
 from board import Board
 pygame.init()
@@ -26,6 +28,15 @@ pygame.init()
 class WindowManager:
     def __init__(self):
         self.board = Board()
+
+    def analyze(self, eng_path):
+        start_movenum = self.board.move_num
+        engine = chess.engine.SimpleEngine.popen_uci(eng_path)
+        with engine.analysis(self.board.view_board) as analysis:
+            for info in analysis:
+                print(info)
+                if self.board.move_num != start_movenum:
+                    break
 
     def draw(self, surface, events):
         width, height = surface.get_size()
