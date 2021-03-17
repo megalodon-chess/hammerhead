@@ -39,17 +39,20 @@ class WindowManager:
 
         self.analysis_session = 0
         self.analysis_eng = ""
+        self.analysis_in_progress = False
         self.analysis_load_eng = Button()
         self.analysis_start = Button()
+        self.analysis_stop = Button()
 
         self.board = Board()
 
     def analyze(self, eng_path):
+        self.analysis_info = {"depth": 0, "nodes": 0, "nps": 0, "score": None, "time": 0}
+        self.analysis_in_progress = True
+
         start_move_num = self.board.move_num
         session = self.analysis_session
         engine = chess.engine.SimpleEngine.popen_uci(eng_path)
-        self.analysis_info = {"depth": 0, "nodes": 0, "nps": 0, "score": None, "time": 0}
-
         with engine.analysis(self.board.view_board) as analysis:
             keys = ("depth", "nodes", "nps", "score", "time")
             for info in analysis:
@@ -61,6 +64,7 @@ class WindowManager:
                     break
 
         engine.quit()
+        self.analysis_in_progress = False
 
     def draw(self, surface, events):
         # Split surface into sections
@@ -83,7 +87,7 @@ class WindowManager:
         # Tabs
         tab_size = menu_size[0] / len(self.menus)
         tab_margin = 2
-        tab_height = 20
+        tab_height = 25
 
         for i, tab in enumerate(self.menus):
             col = TAB_SEL if i == self.tab else TAB_DESEL
@@ -100,9 +104,11 @@ class WindowManager:
 
         if self.menus[self.tab] == "Analysis":
             self.analysis_load_eng.draw(surface, events, (menu_loc[0]+25, menu_loc[1]+tab_height+25), (150, 35), "Load Engine")
+            self.analysis_start.draw(surface, events, (menu_loc[0]+25, menu_loc[1]+tab_height+70), (150, 35), "Start Analysis")
+            self.analysis_stop.draw(surface, events, (menu_loc[0]+25, menu_loc[1]+tab_height+115), (150, 35), "Stop Analysis")
             centered_text(surface, (menu_loc[0]+200, menu_loc[1]+tab_height+42), BLACK, FONT_SMALL, self.analysis_eng, cx=False)
 
-            if self.analysis_load_eng.clicked(events):
+            if self.analysis_load_eng.clicked(events) and not self.analysis_in_progress:
                 settings = load_settings()
                 kwargs = {"initialdir": settings["analysis_eng_path"]} if "analysis_eng_path" in settings else {}
                 path = askopenfilename(title="Select Engine", **kwargs)
@@ -111,6 +117,13 @@ class WindowManager:
                     self.analysis_eng = path
                     settings["analysis_eng_path"] = os.path.dirname(path)
                     save_settings(settings)
+            if self.analysis_start.clicked(events) and not self.analysis_in_progress and os.path.isfile(self.analysis_eng):
+                threading.Thread(target=self.analyze, args=(self.analysis_eng,)).start()
+            if self.analysis_stop.clicked(events) and self.analysis_in_progress:
+                self.analysis_session += 1
+
+            text = "Analysis in progress" if self.analysis_in_progress else "Analysis not in progress"
+            centered_text(surface, (menu_loc[0]+25, menu_loc[1]+225), BLACK, FONT_MED, text, cx=False, cy=False)
 
 
 def main():
