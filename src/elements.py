@@ -40,3 +40,11 @@ class Button:
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     return True
         return False
+
+    def draw(self, surface, events, loc, size):
+        self.prev_loc = loc
+        self.prev_size = size
+
+        color = (GRAY_DARK if self.clicked() else WHITE) if self.hovered() else GRAY_LIGHT
+        pygame.draw.rect(surface, color, (*loc, *size))
+        pygame.draw.rect(surface, WHITE, (*loc, *size), 2)
