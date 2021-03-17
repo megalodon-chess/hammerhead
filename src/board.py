@@ -31,6 +31,7 @@ class Board:
 
         self.move_num = 0            # Current position is startpos with this many moves
         self.flipped = False
+        self.selected = set()        # Selected cells, set((x1, y1), (x2, y2), ...)
 
         self.thread_id = 0           # Analysis thread ends when this value changes
         self.analysis_info = None
