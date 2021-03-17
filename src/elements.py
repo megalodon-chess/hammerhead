@@ -22,10 +22,14 @@ from constants import *
 pygame.init()
 
 
-def centered_text(surf, loc, col, font, text):
+def centered_text(surf, loc, col, font, text, cx=True, cy=True):
     text_surf = font.render(text, 1, col)
-    text_loc = (loc[0]-text_surf.get_width()//2, loc[1]-text_surf.get_height()//2)
-    surf.blit(text_surf, text_loc)
+    loc = list(loc)
+    if cx:
+        loc[0] -= text_surf.get_width()//2
+    if cy:
+        loc[1] -= text_surf.get_height()//2
+    surf.blit(text_surf, loc)
 
 
 class Button:
