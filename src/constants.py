@@ -29,7 +29,7 @@ def load_settings():
 
 def save_settings(settings):
     with open(SETTINGS_PATH, "w") as file:
-        json.dump(settings, file)
+        json.dump(settings, file, indent=4)
 
 
 PARENT = os.path.dirname(os.path.realpath(__file__))
@@ -40,8 +40,8 @@ FPS = 60
 IMAGES = {}
 
 FONT_SMALL = pygame.font.SysFont("arial", 14)
-FONT_MED = pygame.font.SysFont("arial", 24)
-FONT_LARGE = pygame.font.SysFont("arial", 36)
+FONT_MED = pygame.font.SysFont("arial", 18)
+FONT_LARGE = pygame.font.SysFont("arial", 30)
 
 BLACK = (0, 0, 0)
 GRAY_DARK = (64, 64, 64)

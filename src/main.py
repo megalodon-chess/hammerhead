@@ -17,14 +17,18 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 
+import os
 import threading
 import pygame
 import chess
 import chess.engine
+from tkinter import Tk
+from tkinter.filedialog import askopenfilename
 from constants import *
 from elements import Button, centered_text
 from board import Board
 pygame.init()
+Tk().withdraw()
 
 
 class WindowManager:
@@ -33,10 +37,16 @@ class WindowManager:
         self.menus = ("Game", "Analysis", "Engines")
         self.tab = 0
 
+        self.analysis_session = 0
+        self.analysis_eng = ""
+        self.analysis_load_eng = Button()
+        self.analysis_start = Button()
+
         self.board = Board()
 
     def analyze(self, eng_path):
         start_move_num = self.board.move_num
+        session = self.analysis_session
         engine = chess.engine.SimpleEngine.popen_uci(eng_path)
         self.analysis_info = {"depth": 0, "nodes": 0, "nps": 0, "score": None, "time": 0}
 
@@ -47,7 +57,7 @@ class WindowManager:
                     if key in info:
                         self.analysis_info[key] = info[key]
 
-                if self.board.move_num != start_move_num or not self.active:
+                if self.board.move_num != start_move_num or not self.active or self.analysis_session != session:
                     break
 
         engine.quit()
@@ -87,6 +97,10 @@ class WindowManager:
             pygame.draw.rect(surface, col, (*loc, *size), border_top_left_radius=5, border_top_right_radius=5)
             centered_text(surface, (loc[0]+size[0]//2, loc[1]+size[1]//2), BLACK, FONT_SMALL, tab)
         pygame.draw.rect(surface, TAB_SEL, (menu_loc[0], menu_loc[1]+tab_height, menu_size[0], menu_size[1]-tab_height))
+
+        if self.menus[self.tab] == "Analysis":
+            self.analysis_load_eng.draw(surface, events, (menu_loc[0]+25, menu_loc[1]+tab_height+25), (150, 35), "Load Engine")
+            centered_text(surface, (menu_loc[0]+200, menu_loc[1]+tab_height+42), BLACK, FONT_SMALL, self.analysis_eng, cx=False)
 
 
 def main():
