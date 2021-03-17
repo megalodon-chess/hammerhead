@@ -102,6 +102,16 @@ class WindowManager:
             self.analysis_load_eng.draw(surface, events, (menu_loc[0]+25, menu_loc[1]+tab_height+25), (150, 35), "Load Engine")
             centered_text(surface, (menu_loc[0]+200, menu_loc[1]+tab_height+42), BLACK, FONT_SMALL, self.analysis_eng, cx=False)
 
+            if self.analysis_load_eng.clicked(events):
+                settings = load_settings()
+                kwargs = {"initialdir": settings["analysis_eng_path"]} if "analysis_eng_path" in settings else {}
+                path = askopenfilename(title="Select Engine", **kwargs)
+                if isinstance(path, str) and os.path.isfile(path):
+                    path = os.path.realpath(path)
+                    self.analysis_eng = path
+                    settings["analysis_eng_path"] = os.path.dirname(path)
+                    save_settings(settings)
+
 
 def main():
     width, height = 1280, 720

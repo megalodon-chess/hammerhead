@@ -39,7 +39,7 @@ SETTINGS_PATH = os.path.join(PARENT, "settings.json")
 FPS = 60
 IMAGES = {}
 
-FONT_SMALL = pygame.font.SysFont("arial", 14)
+FONT_SMALL = pygame.font.SysFont("arial", 15)
 FONT_MED = pygame.font.SysFont("arial", 18)
 FONT_LARGE = pygame.font.SysFont("arial", 30)
 
