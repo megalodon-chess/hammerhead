@@ -30,7 +30,7 @@ class Button:
     def hovered(self):
         mouse = pygame.mouse.get_pos()
         if self.prev_loc[0] <= mouse[0] <= self.prev_loc[0]+self.prev_size[0]:
-            if self.prev_loc[1] <= mouse[1] <= self.prev_loc[1]+mouse[1]:
+            if self.prev_loc[1] <= mouse[1] <= self.prev_loc[1]+self.prev_size[1]:
                 return True
         return False
 
@@ -41,10 +41,13 @@ class Button:
                     return True
         return False
 
-    def draw(self, surface, events, loc, size):
+    def draw(self, surface, events, loc, size, text):
         self.prev_loc = loc
         self.prev_size = size
 
-        color = (GRAY_DARK if self.clicked() else WHITE) if self.hovered() else GRAY_LIGHT
+        color = (GRAY_DARK if self.clicked(events) else WHITE) if self.hovered() else GRAY_LIGHT
+        text_surf = FONT_MED.render(text, 1, BLACK)
+        text_loc = (loc[0] + (size[0]-text_surf.get_width())//2, loc[1] + (size[1]-text_surf.get_height())//2)
         pygame.draw.rect(surface, color, (*loc, *size))
         pygame.draw.rect(surface, WHITE, (*loc, *size), 2)
+        surface.blit(text_surf, text_loc)
