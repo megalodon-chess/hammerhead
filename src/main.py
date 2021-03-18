@@ -118,7 +118,7 @@ class WindowManager:
 
         # Tabs
         tab_size = menu_size[0] / len(self.menus)
-        tab_margin = 2
+        tab_margin = 0
         tab_height = 25
 
         for i, tab in enumerate(self.menus):
