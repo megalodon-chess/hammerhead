@@ -114,7 +114,7 @@ class WindowManager:
         menu_loc = (board_size+100, 50)
 
         # Board
-        surface.blit(self.board.draw(events, board_size), board_loc)
+        self.board.draw(surface, events, board_loc, board_size)
 
         # Tabs
         tab_size = menu_size[0] / len(self.menus)

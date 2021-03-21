@@ -51,7 +51,7 @@ class Board:
         self.board.push(move)
         self.set_view()
 
-    def draw(self, events, size):
+    def draw(self, surface, events, board_loc, size):
         sq_size = int(size / 8)
         surf = pygame.Surface((sq_size*8, sq_size*8), pygame.SRCALPHA)
         self.update(events, sq_size)
@@ -95,7 +95,7 @@ class Board:
 
         if self.flipped:
             surf = pygame.transform.rotate(surf, 180)
-        return surf
+        surface.blit(surf, board_loc)
 
     def update(self, events, sq_size):
         for event in events:
