@@ -98,7 +98,7 @@ class WindowManager:
         if restart:
             threading.Thread(target=self.analyze, args=(eng_path,)).start()
 
-    def draw(self, surface, events):
+    def draw(self, surface, events, force_redraw=False):
         # Split surface into sections
         width, height = surface.get_size()
         mx, my = pygame.mouse.get_pos()
@@ -114,7 +114,7 @@ class WindowManager:
         menu_loc = (board_size+100, 50)
 
         # Board
-        self.board.draw(surface, events, board_loc, board_size)
+        self.board.draw(surface, events, board_loc, board_size, force_redraw)
 
         # Tabs
         tab_size = menu_size[0] / len(self.menus)

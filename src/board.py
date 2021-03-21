@@ -28,6 +28,7 @@ class Board:
     def __init__(self):
         self.board = chess.Board()   # Current position
         self.view_board = None       # Current viewed position
+        self.prev_info = None
 
         self.move_num = 0            # Current position is startpos with this many moves
         self.flipped = False
@@ -51,12 +52,15 @@ class Board:
         self.board.push(move)
         self.set_view()
 
-    def draw(self, surface, events, board_loc, size):
+    def draw(self, surface, events, board_loc, size, force_redraw):
         sq_size = int(size / 8)
         surf = pygame.Surface((sq_size*8, sq_size*8), pygame.SRCALPHA)
         self.update(events, sq_size)
         if self.view_board is None:
             self.set_view()
+        if (self.flipped, board_loc, size, self.move_num) == self.prev_info and not force_redraw:
+            return
+        self.prev_info = (self.flipped, board_loc, size, self.move_num)
 
         # Squares
         for x in range(8):

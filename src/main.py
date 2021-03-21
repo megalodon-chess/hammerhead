@@ -26,6 +26,7 @@ pygame.init()
 def main():
     width, height = 1280, 720
     prev_width, prev_height = 1280, 720
+    resized = False
 
     pygame.display.set_caption("Hammerhead Chess GUI")
     surface = pygame.display.set_mode((width, height), pygame.RESIZABLE)
@@ -48,9 +49,11 @@ def main():
                 surface = pygame.display.set_mode((width, height), pygame.RESIZABLE)
                 prev_width = width
                 prev_height = height
+                surface.fill(BLACK)
+                resized = True
 
-        surface.fill(BLACK)
-        winman.draw(surface, events)
+        winman.draw(surface, events, resized)
+        resized = False
 
 
 main()
