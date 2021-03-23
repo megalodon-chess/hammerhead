@@ -24,14 +24,11 @@ pygame.init()
 
 
 def main():
-    width, height = 1280, 720
-    prev_width, prev_height = 1280, 720
-    resized = False
-
     pygame.display.set_caption("Hammerhead Chess GUI")
-    surface = pygame.display.set_mode((width, height), pygame.RESIZABLE)
+    surface = pygame.display.set_mode((1280, 720), pygame.RESIZABLE)
     clock = pygame.time.Clock()
 
+    resized = False
     winman = WindowManager()
 
     while True:
@@ -44,11 +41,6 @@ def main():
                 pygame.quit()
                 return
             elif event.type == pygame.VIDEORESIZE:
-                width, height = event.w, event.h
-            elif event.type == pygame.ACTIVEEVENT and (width, height) != (prev_width, prev_height):
-                surface = pygame.display.set_mode((width, height), pygame.RESIZABLE)
-                prev_width = width
-                prev_height = height
                 surface.fill(BLACK)
                 resized = True
 
