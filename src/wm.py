@@ -22,6 +22,7 @@ from constants import *
 from elements import Button, centered_text
 from board import Board
 from analyze import Analysis
+from game import Game
 pygame.init()
 
 
@@ -33,6 +34,7 @@ class WindowManager:
 
         self.board = Board()
         self.analysis = Analysis()
+        self.game = Game(self.board)
 
     def draw(self, surface, events, force_redraw=False):
         # Split surface into sections
