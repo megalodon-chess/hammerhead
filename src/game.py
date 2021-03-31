@@ -24,8 +24,5 @@ class Game:
     def __init__(self, board):
         self.board = board
 
-    def update(self, surface, events, loc, size):
-        self.draw(surface, loc, size)
-    
-    def draw(self, surface, loc, size):
+    def draw(self, surface, events, loc, size):
         pass

@@ -74,6 +74,6 @@ class WindowManager:
         menu_loc = (menu_loc[0]+25, menu_loc[1]+25+tab_height)
 
         if self.menus[self.tab] == "Game":
-            self.game.update(surface, events, menu_loc, menu_size)
+            self.game.draw(surface, events, menu_loc, menu_size)
         elif self.menus[self.tab] == "Analysis":
             self.analysis.draw(surface, events, menu_loc, menu_size, self)
