@@ -91,7 +91,7 @@ class Analysis:
         if restart:
             threading.Thread(target=self.analyze, args=(eng_path,)).start()
 
-    def draw(self, surface, events, loc, size):
+    def draw(self, surface, events, loc, size, wm):
         self.load_eng.draw(surface, events, (loc[0]+25, loc[1]+25), (150, 35), "Load Engine")
         self.start.draw(surface, events, (loc[0]+25, loc[1]+70), (150, 35), "Start Analysis")
         self.stop.draw(surface, events, (loc[0]+25, loc[1]+115), (150, 35), "Stop Analysis")
