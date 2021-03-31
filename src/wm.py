@@ -71,6 +71,9 @@ class WindowManager:
             pygame.draw.rect(surface, col, (*loc, *size), border_top_left_radius=5, border_top_right_radius=5)
             centered_text(surface, (loc[0]+size[0]//2, loc[1]+size[1]//2), BLACK, FONT_SMALL, tab)
         pygame.draw.rect(surface, TAB_SEL, (menu_loc[0], menu_loc[1]+tab_height, menu_size[0], menu_size[1]-tab_height))
+        menu_loc = (menu_loc[0]+25, menu_loc[1]+25+tab_height)
 
-        if self.menus[self.tab] == "Analysis":
-            self.analysis.draw(surface, events, (menu_loc[0]+25, menu_loc[1]+25+tab_height), menu_size, self)
+        if self.menus[self.tab] == "Game":
+            self.game.update(surface, events, menu_loc, menu_size)
+        elif self.menus[self.tab] == "Analysis":
+            self.analysis.draw(surface, events, menu_loc, menu_size, self)
