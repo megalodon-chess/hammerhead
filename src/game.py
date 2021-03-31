@@ -18,13 +18,16 @@
 #
 
 import pygame
+import chess
 from elements import Button
 
 
 class Game:
-    def __init__(self, board):
-        self.board = board
+    def __init__(self):
         self.new_game = Button()
 
-    def draw(self, surface, events, loc, size):
+    def draw(self, surface, events, loc, size, wm):
         self.new_game.draw(surface, events, (loc[0]+size[0]/2, loc[1]), (size[0]/3, size[1]/12), "New Game")
+
+        if self.new_game.clicked(events):
+            wm.board.reset()

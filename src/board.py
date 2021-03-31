@@ -37,6 +37,12 @@ class Board:
         self.push(chess.Move.from_uci("g1f3"))
         self.push(chess.Move.from_uci("b8c6"))
 
+    def reset(self):
+        self.board.reset()
+        self.view_board.reset()
+        self.move_num = 0
+        self.selected.clear()
+
     def set_view(self):
         self.view_board = chess.Board()
         movect = 0
