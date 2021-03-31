@@ -18,11 +18,13 @@
 #
 
 import pygame
+from elements import Button
 
 
 class Game:
     def __init__(self, board):
         self.board = board
+        self.new_game = Button()
 
     def draw(self, surface, events, loc, size):
-        pass
+        self.new_game.draw(surface, events, (loc[0]+size[0]/2, loc[1]), (size[0]/3, size[1]/12), "New Game")
