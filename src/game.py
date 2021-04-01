@@ -61,3 +61,7 @@ class Game:
 
         wtime = f"{str(whr)+':' if whr else ''}{'0'+str(wmn) if wmn < 10 else wmn}:{'0'+str(wsc) if wsc < 10 else wsc}"
         btime = f"{str(bhr)+':' if bhr else ''}{'0'+str(bmn) if bmn < 10 else bmn}:{'0'+str(bsc) if bsc < 10 else bsc}"
+
+        wname = self.white.split("/")[-1] if self.white is not None else "N/A"
+        bname = self.black.split("/")[-1] if self.black is not None else "N/A"
+
