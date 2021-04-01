@@ -70,12 +70,14 @@ class Game:
         surface.blit(wtxt, (loc[0], loc[1]+5+9))
         surface.blit(btxt, (loc[0], loc[1]+5+46+9))
 
-        pygame.draw.rect(surface, WHITE, (loc[0]+wtxt.get_width()+15, loc[1]+5+9, wtxt.get_height(), wtxt.get_height()))
-        pygame.draw.rect(surface, BLACK, (loc[0]+btxt.get_width()+15, loc[1]+5+46+9, btxt.get_height(), btxt.get_height()))
+        longest = max(wtxt.get_width(), btxt.get_width())
 
-        pygame.draw.rect(surface, TIME_BOX, (loc[0]+75+wtxt.get_width(), loc[1]+5, 100, 36))
-        pygame.draw.rect(surface, BLACK,    (loc[0]+75+wtxt.get_width(), loc[1]+5, 100, 36), 3)
-        pygame.draw.rect(surface, TIME_BOX, (loc[0]+75+btxt.get_width(), loc[1]+5+36+10, 100, 36))
-        pygame.draw.rect(surface, BLACK,    (loc[0]+75+btxt.get_width(), loc[1]+5+36+10, 100, 36), 3)
-        centered_text(surface, (loc[0]+75+wtxt.get_width()+50, loc[1]+5+18), BLACK, FONT_MED, wtime)
-        centered_text(surface, (loc[0]+75+wtxt.get_width()+50, loc[1]+5+36+10+18), BLACK, FONT_MED, wtime)
+        pygame.draw.rect(surface, WHITE, (loc[0]+longest+15, loc[1]+5+9, wtxt.get_height(), wtxt.get_height()))
+        pygame.draw.rect(surface, BLACK, (loc[0]+longest+15, loc[1]+5+46+9, btxt.get_height(), btxt.get_height()))
+
+        pygame.draw.rect(surface, TIME_BOX, (loc[0]+75+longest, loc[1]+5, 100, 36))
+        pygame.draw.rect(surface, BLACK,    (loc[0]+75+longest, loc[1]+5, 100, 36), 3)
+        pygame.draw.rect(surface, TIME_BOX, (loc[0]+75+longest, loc[1]+5+36+10, 100, 36))
+        pygame.draw.rect(surface, BLACK,    (loc[0]+75+longest, loc[1]+5+36+10, 100, 36), 3)
+        centered_text(surface, (loc[0]+75+longest+50, loc[1]+5+18), BLACK, FONT_MED, wtime)
+        centered_text(surface, (loc[0]+75+longest+50, loc[1]+5+36+10+18), BLACK, FONT_MED, wtime)
