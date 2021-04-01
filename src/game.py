@@ -18,13 +18,14 @@
 #
 
 import pygame
-import chess
-from elements import Button
+from constants import *
+from elements import Button, centered_text
 
 
 class Game:
     def __init__(self):
         self.new_game = Button()
+        self.turn = True
         
         # Path to engines
         self.white = None
@@ -53,5 +54,8 @@ class Game:
         if bsc.is_integer():
             bsc = int(bsc)
 
-        wtime = f"{whr if whr else ''}:{wmn}:{wsc}"
-        btime = f"{bhr if bhr else ''}:{bmn}:{bsc}"
+        wtime = f"{whr+':' if whr else ''}{wmn}:{wsc}"
+        btime = f"{bhr+':' if bhr else ''}{bmn}:{bsc}"
+
+        centered_text(surface, loc, BLACK, FONT_MED, wtime)
+        centered_text(surface, (loc[0], loc[1]+50), BLACK, FONT_MED, btime)
