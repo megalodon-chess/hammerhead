@@ -43,11 +43,15 @@ class Game:
         whr_secs = whr*36000
         wmn = (self.time[0]-whr_secs)//600
         wsc = (self.time[0]-whr_secs-wmn*600)/10
+        if wsc.is_integer():
+            wsc = int(wsc)
 
         bhr = self.time[1]//36000
         bhr_secs = bhr*36000
         bmn = (self.time[1]-bhr_secs)//600
         bsc = (self.time[1]-bhr_secs-bmn*600)/10
+        if bsc.is_integer():
+            bsc = int(bsc)
 
         wtime = f"{whr if whr else ''}:{wmn}:{wsc}"
         btime = f"{bhr if bhr else ''}:{bmn}:{bsc}"
