@@ -106,9 +106,9 @@ class Analysis:
                 self.eng = path
                 settings["eng_path"] = os.path.dirname(path)
                 save_settings(settings)
-        if self.start.clicked(events) and not self.in_progress and os.path.isfile(self.eng):
+        elif self.start.clicked(events) and not self.in_progress and os.path.isfile(self.eng):
             threading.Thread(target=self.analyze, args=(self.eng, wm)).start()
-        if self.stop.clicked(events) and self.in_progress:
+        elif self.stop.clicked(events) and self.in_progress:
             self.session += 1
 
         text = "Analysis in progress" if self.in_progress else "Analysis not in progress"

@@ -30,7 +30,7 @@ class Game:
         self.white = None
         self.black = None
 
-        # (white, black)
+        # (white, black) in 0.1 seconds
         self.time = (0, 0)
 
     def draw(self, surface, events, loc, size, wm):
