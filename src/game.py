@@ -25,9 +25,16 @@ from elements import Button
 class Game:
     def __init__(self):
         self.new_game = Button()
+        
+        # Path to engines
+        self.white = None
+        self.black = None
+
+        # (white, black)
+        self.time = (0, 0)
 
     def draw(self, surface, events, loc, size, wm):
-        self.new_game.draw(surface, events, (loc[0]+size[0]/2, loc[1]), (size[0]/3, size[1]/12), "New Game")
+        self.new_game.draw(surface, events, (loc[0]+size[0]*2/3-50, loc[1]), (size[0]/3, size[1]/12), "New Game")
 
         if self.new_game.clicked(events):
             wm.board.reset()
