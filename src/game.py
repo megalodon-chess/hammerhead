@@ -64,3 +64,12 @@ class Game:
 
         wname = self.white.split("/")[-1] if self.white is not None else "N/A"
         bname = self.black.split("/")[-1] if self.black is not None else "N/A"
+
+        wtxt = FONT_MED.render(wname, 1, BLACK)
+        btxt = FONT_MED.render(bname, 1, BLACK)
+
+        surface.blit(wtxt, (loc[0], loc[1]+5))
+        surface.blit(btxt, (loc[0], loc[1]+5+wtxt.get_height()+20))
+
+        pygame.draw.rect(surface, WHITE, (loc[0]+wtxt.get_width()+15, loc[1]+5, wtxt.get_height(), wtxt.get_height()))
+        pygame.draw.rect(surface, BLACK, (loc[0]+btxt.get_width()+15, loc[1]+5+wtxt.get_height()+20, btxt.get_height(), btxt.get_height()))
