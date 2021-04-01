@@ -34,6 +34,15 @@ class Game:
         # (white, black) in 0.1 seconds
         self.time = [0, 0]
 
+    def set_time(self, wt=None, bt=None):
+        """
+        Set the time for the given side in seconds.
+        """
+        if wt is not None:
+            self.time[0] = wt
+        if bt is not None:
+            self.time[1] = bt
+
     def reset(self, wm):
         self.turn = True
         self.time = [0, 0]
