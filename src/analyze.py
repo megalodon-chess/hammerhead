@@ -92,9 +92,9 @@ class Analysis:
             threading.Thread(target=self.analyze, args=(eng_path,)).start()
 
     def draw(self, surface, events, loc, size, wm):
-        self.load_eng.draw(surface, events, (loc[0]+25, loc[1]+25), (150, 35), "Load Engine")
-        self.start.draw(surface, events, (loc[0]+25, loc[1]+70), (150, 35), "Start Analysis")
-        self.stop.draw(surface, events, (loc[0]+25, loc[1]+115), (150, 35), "Stop Analysis")
+        self.load_eng.draw(surface, events, (loc[0], loc[1]), (150, 35), "Load Engine")
+        self.start.draw(surface, events, (loc[0], loc[1]+70), (150, 35), "Start Analysis")
+        self.stop.draw(surface, events, (loc[0], loc[1]+115), (150, 35), "Stop Analysis")
         centered_text(surface, (loc[0]+200, loc[1]+42), BLACK, FONT_SMALL, self.eng, cx=False)
 
         if self.load_eng.clicked(events) and not self.in_progress:
@@ -112,7 +112,7 @@ class Analysis:
             self.session += 1
 
         text = "Analysis in progress" if self.in_progress else "Analysis not in progress"
-        centered_text(surface, (loc[0]+25, loc[1]+225), BLACK, FONT_MED, text, cx=False)
+        centered_text(surface, (loc[0], loc[1]+225), BLACK, FONT_MED, text, cx=False)
         info = (
             ("Depth", "depth"),
             ("Nodes", "nodes"),
@@ -126,4 +126,4 @@ class Analysis:
                 text = text + ": "
                 text += self.nodes_text(key_info) if "Nodes" in text else str(key_info)
                 y = loc[1] + 275 + 25*i
-                centered_text(surface, (loc[0]+25, y), BLACK, FONT_SMALL, text, cx=False)
+                centered_text(surface, (loc[0], y), BLACK, FONT_SMALL, text, cx=False)
