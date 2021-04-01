@@ -34,11 +34,16 @@ class Game:
         # (white, black) in 0.1 seconds
         self.time = (0, 0)
 
+    def reset(self, wm):
+        self.turn = True
+        self.time = (0, 0)
+        wm.board.reset()
+
     def draw(self, surface, events, loc, size, wm):
         self.new_game.draw(surface, events, (loc[0]+size[0]*2/3-50, loc[1]), (size[0]/3, size[1]/12), "New Game")
 
         if self.new_game.clicked(events):
-            wm.board.reset()
+            self.reset(wm)
 
         whr = self.time[0]//36000
         whr_secs = whr*36000
