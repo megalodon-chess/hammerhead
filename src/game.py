@@ -32,11 +32,11 @@ class Game:
         self.black = None
 
         # (white, black) in 0.1 seconds
-        self.time = (0, 0)
+        self.time = [0, 0]
 
     def reset(self, wm):
         self.turn = True
-        self.time = (0, 0)
+        self.time = [0, 0]
         wm.board.reset()
 
     def draw(self, surface, events, loc, size, wm):
