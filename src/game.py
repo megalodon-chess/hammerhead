@@ -64,4 +64,3 @@ class Game:
 
         wname = self.white.split("/")[-1] if self.white is not None else "N/A"
         bname = self.black.split("/")[-1] if self.black is not None else "N/A"
-
