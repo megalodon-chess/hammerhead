@@ -45,6 +45,7 @@ class Game:
         if self.new_game.clicked(events):
             self.reset(wm)
 
+        # Get white times
         whr = self.time[0]//36000
         whr_secs = whr*36000
         wmn = (self.time[0]-whr_secs)//600
@@ -52,6 +53,7 @@ class Game:
         if wsc.is_integer():
             wsc = int(wsc)
 
+        # Get black times
         bhr = self.time[1]//36000
         bhr_secs = bhr*36000
         bmn = (self.time[1]-bhr_secs)//600
@@ -59,22 +61,28 @@ class Game:
         if bsc.is_integer():
             bsc = int(bsc)
 
+        # Convert times into string
         wtime = f"{str(whr)+':' if whr else ''}{'0'+str(wmn) if wmn < 10 else wmn}:{'0'+str(wsc) if wsc < 10 else wsc}"
         btime = f"{str(bhr)+':' if bhr else ''}{'0'+str(bmn) if bmn < 10 else bmn}:{'0'+str(bsc) if bsc < 10 else bsc}"
 
+        # Get engine name
         wname = self.white.split("/")[-1] if self.white is not None else "N/A"
         bname = self.black.split("/")[-1] if self.black is not None else "N/A"
 
+        # Draw engine name
         wtxt = FONT_MED.render(wname, 1, BLACK)
         btxt = FONT_MED.render(bname, 1, BLACK)
         surface.blit(wtxt, (loc[0], loc[1]+5+9))
         surface.blit(btxt, (loc[0], loc[1]+5+46+9))
 
+        # Get longest engine name
         longest = max(wtxt.get_width(), btxt.get_width())
 
+        # Draw color
         pygame.draw.rect(surface, WHITE, (loc[0]+longest+15, loc[1]+5+9, wtxt.get_height(), wtxt.get_height()))
         pygame.draw.rect(surface, BLACK, (loc[0]+longest+15, loc[1]+5+46+9, btxt.get_height(), btxt.get_height()))
 
+        # Draw time
         pygame.draw.rect(surface, TIME_BOX, (loc[0]+75+longest, loc[1]+5, 100, 36))
         pygame.draw.rect(surface, BLACK,    (loc[0]+75+longest, loc[1]+5, 100, 36), 3)
         pygame.draw.rect(surface, TIME_BOX, (loc[0]+75+longest, loc[1]+5+36+10, 100, 36))
