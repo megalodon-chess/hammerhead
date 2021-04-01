@@ -61,6 +61,3 @@ class Game:
 
         wtime = f"{str(whr)+':' if whr else ''}{'0'+str(wmn) if wmn < 10 else wmn}:{'0'+str(wsc) if wsc < 10 else wsc}"
         btime = f"{str(bhr)+':' if bhr else ''}{'0'+str(bmn) if bmn < 10 else bmn}:{'0'+str(bsc) if bsc < 10 else bsc}"
-
-        centered_text(surface, (loc[0]+20, loc[1]), BLACK, FONT_MED, wtime)
-        centered_text(surface, (loc[0]+20, loc[1]+50), BLACK, FONT_MED, btime)
